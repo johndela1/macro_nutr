@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 
-def gb_protein_g(weight_g, protein_prop_g):
-    return weight_g * protein_prop_g * .25
-
-
-def gb_fat_g(weight_g, fat_prop_g):
-    return weight_g * fat_prop_g * .9
-
-
-def fat_to_protein(prop):
-    return int(gb_fat_g(100, prop)), int(gb_protein_g(100, 1-prop))
-
 
 class Food:
     def __init__(self, weight_g):
@@ -19,17 +8,24 @@ class Food:
         self.fat_g = weight_g * self.fat_g_per_g
         self.protein_g = weight_g * self.protein_g_per_g
 
+    def __repr__(self):
+        return f'g{self.weight_g}, c{self.energy_c}, f{self.fat_g}, p{self.protein_g}'
+
+class Meat(Food):
+    energy_c_per_g = None
+    fat_g_per_g = None
+    protein_g_per_g = None
+
+    def __init__(self, weight_g, fat_prop):
+        self.fat_g_per_g = fat_prop * .9
+        self.protein_g_per_g = (1-fat_prop) * .25
+        self.energy_c_per_g = self.fat_g_per_g*9 + self.protein_g_per_g*4
+        super().__init__(weight_g)
 
 class Liver(Food):
     energy_c_per_g = 1.91
     fat_g_per_g = .053
     protein_g_per_g = .29
-
-
-class Meat(Food):
-    energy_c_per_g = 2.71
-    fat_g_per_g = .19
-    protein_g_per_g = .25
 
 
 class Suet(Food):
@@ -41,8 +37,8 @@ class Suet(Food):
 def meal(total_energy_c, total_protein_g, liver_g_per_w):
     liver = Liver(liver_g_per_w/7)
     meat_protein_g = total_protein_g - liver.protein_g
-    meat = Meat(meat_protein_g/Meat.protein_g_per_g)
-    # meat = protein_nutr(meat_protein, Food(1, 4.23, .41, .12))
+    prop_fat=.5
+    meat = Meat(meat_protein_g/Meat(1, prop_fat).protein_g_per_g, prop_fat)
     suet = Suet(
         (total_energy_c - (liver.energy_c + meat.energy_c))
         / Suet.energy_c_per_g)
