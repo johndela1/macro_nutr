@@ -50,8 +50,13 @@ def meal(energy_c, protein_g, liver_g):
     suet = Suet(
         (energy_c - (liver.energy_c + meat.energy_c))
         / Suet.energy_c_per_g)
-    return [f'{i}: {int(f.weight_g)}' for i, f
-            in (('liver', liver), ('meat', meat), ('suet', suet))]
+    return liver, meat, suet
+
+
+def fat_prop(meal):
+    fat_g = sum(i.fat_g for i in meal)
+    protein_g= sum(i.protein_g for i in meal)
+    return fat_g / protein_g
 
 if __name__ == '__main__':
     liver_g_per_w = 454
@@ -59,3 +64,4 @@ if __name__ == '__main__':
     m =  meal(energy_c=2000, protein_g=64, liver_g=liver_g_per_d)
     for i in m:
         print(i)
+    print('fat/protein ', fat_prop(m))
