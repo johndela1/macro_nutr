@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+"""sources
+https://ndb.nal.usda.gov/ndb/search/list
+https://www.calorieking.com/us/en/
+https://nutritiondata.self.com/
+https://www.nutritionvalue.org/
+"""
+
 import sys
 
 
@@ -13,10 +20,10 @@ class Food:
     def __repr__(self):
         return ', '.join((
             self.__class__.__name__,
-            f'grams {int(self.weight_g)}',
-            f'calories {int(self.energy_kc)}',
-            f'fat {int(self.fat_g)}',
-            f'protein {int(self.protein_g)}',
+            f'grams {self.weight_g:.1f}',
+            f'calories {self.energy_kc:.1f}',
+            f'fat {self.fat_g:.1f}',
+            f'protein {self.protein_g:.1f}',
         ))
 
 
@@ -45,8 +52,8 @@ class Liver(Food):
 
 class Suet(Food):
     energy_kc_per_g = 8.54
-    fat_g_per_g = .94
-    protein_g_per_g = .015
+    fat_g_per_g = .946
+    protein_g_per_g = .018
 
 
 def meal(energy_kc, protein_g, meat_fat_prop, liver_g):
@@ -56,6 +63,11 @@ def meal(energy_kc, protein_g, meat_fat_prop, liver_g):
         (energy_kc - (liver.energy_kc + meat.energy_kc))
         / Suet.energy_kc_per_g)
     return liver, meat, suet
+
+
+def fat_prop_meal(energy_kc, fat_ratio, meat_fat_prop, liver_g):
+    protein_g = energy_kc/(fat_ratio*9 + 4)
+    return meal(energy_kc, protein_g, meat_fat_prop, liver_g)
 
 
 def fat_prop(meal):
@@ -76,3 +88,8 @@ if __name__ == '__main__':
     for i in m:
         print(i)
     print('fat/protein ', fat_prop(m))
+
+    # m =  fat_prop_meal(energy_kc=1900, fat_ratio=2, meat_fat_prop=.2, liver_g=liver_g_per_d)
+    # for i in m:
+    #     print(i)
+    # print('fat/protein ', fat_prop(m))
