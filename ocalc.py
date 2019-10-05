@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """sources
-https://ndb.nal.usda.gov/ndb/search/list
+https://fdc.nal.usda.gov/
 https://www.calorieking.com/us/en/
 https://nutritiondata.self.com/
 https://www.nutritionvalue.org/
@@ -40,7 +40,7 @@ class Meat(Food):
 
     @classmethod
     def from_protein_g(cls, protein_g, fat_prop):
-        protein_g_per_g = Meat(1, fat_prop).protein_g_per_g
+        protein_g_per_g = cls(1, fat_prop).protein_g_per_g
         return cls(protein_g / protein_g_per_g, fat_prop)
 
 
@@ -75,8 +75,18 @@ def fat_prop(meal):
     protein_g= sum(i.protein_g for i in meal)
     return fat_g / protein_g
 
+def two_meats_meal(energy_kc):
+    meat1 = Meat.from_protein_g(25, .5)
+    meat2 = Meat.from_protein_g(65-25, .2)
+    suet = Suet((energy_kc - (meat1.energy_kc + meat2.energy_kc)) / Suet.energy_kc_per_g)
+    meal = (meat1, meat2, suet)
+    for i in meal: print(i)
+    print(fat_prop(meal))
+    exit();
+
 
 if __name__ == '__main__':
+    #two_meats_meal(1900)
     if len(sys.argv) > 1:
         fat_prop = int(sys.argv[1]) / 100
         meat = Meat(1, fat_prop)
