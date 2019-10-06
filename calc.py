@@ -52,6 +52,11 @@ class Organ(Food):
     pass
 
 
+class Brain(Organ):
+    fat_g_per_g = .103
+    protein_g_per_g = .109
+
+
 class GB45(Meat):
     fat_g_per_g = .441
     protein_g_per_g = .127
