@@ -23,11 +23,34 @@ class Food:
     @weight_g.setter
     def weight_g(self, value):
         self._weight_g = value
-        self.energy_kc = self.energy_kc_per_g * value
+        self._energy_kc = self.energy_kc_per_g * value
         self.carb_g = self.carb_g_per_g * value
         self.fat_g = self.fat_g_per_g * value
-        self.protein_g = self.protein_g_per_g * value
+        self._protein_g = self.protein_g_per_g * value
 
+    @property
+    def protein_g(self):
+        return self._protein_g
+
+    @protein_g.setter
+    def protein_g(self, value):
+        self._protein_g = value
+        self._weight_g = value / self.protein_g_per_g
+        self._energy_kc = self.energy_kc_per_g * self._weight_g
+        self.carb_g = self.carb_g_per_g * self._weight_g
+        self.fat_g = self.fat_g_per_g * self._weight_g
+
+    @property
+    def energy_kc(self):
+        return self._energy_kc
+
+    @energy_kc.setter
+    def energy_kc(self, value):
+        self._energy_kc = value
+        self._weight_g = value / self.energy_kc_per_g
+        self._protein = self.protein_g_per_g * self._weight_g
+        self.carb_g = self.carb_g_per_g * self._weight_g
+        self.fat_g = self.fat_g_per_g * self._weight_g
 
     def __repr__(self):
         return ', '.join((
@@ -58,8 +81,13 @@ class Brain(Organ):
 
 
 class GB45(Meat):
-    fat_g_per_g = .441
-    protein_g_per_g = .127
+    fat_g_per_g = .4
+    protein_g_per_g = .14
+
+
+class GB5(Meat):
+    fat_g_per_g = .076
+    protein_g_per_g = .292
 
 
 class Liver(Organ):
@@ -79,18 +107,19 @@ def fat_prop(meal):
 
 
 def by_type(foods, type_):
-    return [f for f in foods if isinstance(f, type_)]
+    return [food for food in foods if isinstance(food, type_)]
 
 
 if __name__ == '__main__':
-    energy_kc = 1900
+    energy_kc = 2000
     protein_g=64
     organ_g = 454 / 7
     foods = (
         Fat(),
         GB45(),
+        # GB5(),
+        # Ribeye(),
         Liver(organ_g),
-        Ribeye(),
     )
 
     fat = by_type(foods, Fat)[0]
@@ -99,11 +128,11 @@ if __name__ == '__main__':
 
     protein_g_per_meat = (protein_g - organ.protein_g) / len(meats)
     for meat in meats:
-        meat.weight_g = protein_g_per_meat / meat.protein_g_per_g
+        meat.protein_g = protein_g_per_meat
 
-    fat.weight_g = (energy_kc
-                    - (organ.energy_kc + sum(meat.energy_kc for meat in meats)
-                    )) / fat.energy_kc_per_g
+    fat.energy_kc = (energy_kc
+                    - (organ.energy_kc
+                       + sum(meat.energy_kc for meat in meats)))
 
     for food in foods:
         print(food)
