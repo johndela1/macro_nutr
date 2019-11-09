@@ -76,8 +76,8 @@ class Organ(Food):
 
 
 class Brain(Organ):
-    fat_g_per_g = .103
-    protein_g_per_g = .109
+    fat_g_per_g = .1
+    protein_g_per_g = .1
 
 
 class GB45(Meat):
@@ -85,9 +85,14 @@ class GB45(Meat):
     protein_g_per_g = .14
 
 
-class GB5(Meat):
-    fat_g_per_g = .076
-    protein_g_per_g = .292
+class Primal(Meat):
+    fat_g_per_g = .05
+    protein_g_per_g = .25
+
+
+class GB10(Meat):
+    fat_g_per_g = .1
+    protein_g_per_g = .2
 
 
 class Liver(Organ):
@@ -97,8 +102,8 @@ class Liver(Organ):
 
 
 class Ribeye(Meat):
-    fat_g_per_g = .221
-    protein_g_per_g = .175
+    fat_g_per_g = .2
+    protein_g_per_g = .22
 
 
 def fat_prop(meal):
@@ -111,15 +116,17 @@ def by_type(foods, type_):
 
 
 if __name__ == '__main__':
-    energy_kc = 2000
+    energy_kc = 1900
     protein_g=64
     organ_g = 454 / 7
+    organ_g = 50
     foods = (
         Fat(),
         GB45(),
-        # GB5(),
-        # Ribeye(),
-        Liver(organ_g),
+        #Primal(),
+        #Ribeye(),
+        #Liver(organ_g),
+        Brain(organ_g),
     )
 
     fat = by_type(foods, Fat)[0]
@@ -135,5 +142,7 @@ if __name__ == '__main__':
                        + sum(meat.energy_kc for meat in meats)))
 
     for food in foods:
+        if not food.energy_kc:
+            continue
         print(food)
     print('fat/protein ', fat_prop(foods))
