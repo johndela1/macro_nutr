@@ -75,6 +75,12 @@ class Organ(Food):
     pass
 
 
+class Egg(Meat):
+    carb_g_per_g = .032
+    fat_g_per_g = .099
+    protein_g_per_g = .126
+
+
 class Brain(Organ):
     fat_g_per_g = .1
     protein_g_per_g = .1
@@ -93,6 +99,11 @@ class Primal(Meat):
 class GB10(Meat):
     fat_g_per_g = .1
     protein_g_per_g = .2
+
+
+class GB5(Meat):
+    fat_g_per_g = .05
+    protein_g_per_g = .214
 
 
 class Liver(Organ):
@@ -116,13 +127,15 @@ def by_type(foods, type_):
 
 
 if __name__ == '__main__':
-    energy_kc = 1900
+    energy_kc = 2000
     protein_g=64
     organ_g = 454 / 7
-    organ_g = 50
+    organ_g = 0
     foods = (
         Fat(),
-        GB45(),
+        #GB45(),
+        GB5(),
+        #Egg(),
         #Primal(),
         #Ribeye(),
         #Liver(organ_g),
