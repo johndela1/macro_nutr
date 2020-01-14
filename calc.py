@@ -91,6 +91,11 @@ class Spleen(Organ):
     protein_g_per_g = .18
 
 
+class SweetBread(Organ):
+    fat_g_per_g = .204
+    protein_g_per_g = .122
+
+
 class Liver(Organ):
     carb_g_per_g = .039
     fat_g_per_g = .036
@@ -110,6 +115,11 @@ class Primal(Meat):
 class GB10(Meat):
     fat_g_per_g = .1
     protein_g_per_g = .2
+
+
+class GB20(Meat):
+    fat_g_per_g = .2
+    protein_g_per_g = .172
 
 
 class GB5(Meat):
@@ -138,13 +148,13 @@ def by_type(foods, type_):
 
 
 if __name__ == '__main__':
-    energy_kc = 1900
+    energy_kc = 2000
     protein_g = 70
-    organ_g = 100 # 454 / 7
+    organ_g = 100
     foods = (
         Fat(),
-        Primal(),
-        Spleen(organ_g),
+        GB20(),
+        Liver(organ_g),
     )
 
     fat = by_type(foods, Fat)[0]
