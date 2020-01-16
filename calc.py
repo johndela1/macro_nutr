@@ -148,25 +148,30 @@ def by_type(foods, type_):
 
 
 if __name__ == '__main__':
-    energy_kc = 2000
+    energy_kc = 1900
     protein_g = 70
-    organ_g = 100
+    organ_g = 454 / 7
     foods = (
         Fat(),
-        GB20(),
-        Liver(organ_g),
+        Primal(),
+        Liver(),
+        Brain(),
     )
 
     fat = by_type(foods, Fat)[0]
     meats = by_type(foods, Meat)
-    organ = by_type(foods, Organ)[0]
+    organs = by_type(foods, Organ)
 
-    protein_g_per_meat = (protein_g - organ.protein_g) / len(meats)
+    g_per_organ = organ_g / len(organs)
+    for organ in organs:
+        organ.protein_g = organ.protein_g_per_g * g_per_organ
+
+    protein_g_per_meat = (protein_g - sum(organ.protein_g for organ in organs)) / len(meats)
     for meat in meats:
         meat.protein_g = protein_g_per_meat
 
     fat.energy_kc = (energy_kc
-                    - (organ.energy_kc
+                    - (sum(organ.energy_kc for organ in organs)
                        + sum(meat.energy_kc for meat in meats)))
 
     for food in foods:
