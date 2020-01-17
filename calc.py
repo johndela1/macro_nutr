@@ -164,7 +164,13 @@ if __name__ == '__main__':
 
     g_per_organ = organ_g / len(organs)
     for organ in organs:
-        organ.protein_g = organ.protein_g_per_g * g_per_organ
+        if organ.weight_g:
+            g_per_organ = (organ_g - organ.weight_g) / (len(organs)-1)
+
+    for organ in organs:
+        if organ.weight_g:
+            continue
+        organ.weight_g = g_per_organ
 
     protein_g_per_meat = (protein_g - sum(organ.protein_g for organ in organs)) / len(meats)
     for meat in meats:
