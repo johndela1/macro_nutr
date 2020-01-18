@@ -102,6 +102,11 @@ class Liver(Offal):
     protein_g_per_g = .204
 
 
+class Tendon(Offal):
+    fat_g_per_g = .05
+    protein_g_per_g = .367
+
+
 class GB45(Meat):
     fat_g_per_g = .4
     protein_g_per_g = .14
