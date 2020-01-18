@@ -71,32 +71,32 @@ class Meat(Food):
     pass
 
 
-class Organ(Food):
+class Offal(Food):
     pass
 
 
-class Brain(Organ):
+class Brain(Offal):
     fat_g_per_g = .1
     protein_g_per_g = .1
 
 
-class Kidney(Organ):
+class Kidney(Offal):
     carb_g_per_g = .03
     fat_g_per_g = .031
     protein_g_per_g = .174
 
 
-class Spleen(Organ):
+class Spleen(Offal):
     fat_g_per_g = .03
     protein_g_per_g = .18
 
 
-class SweetBread(Organ):
+class SweetBread(Offal):
     fat_g_per_g = .204
     protein_g_per_g = .122
 
 
-class Liver(Organ):
+class Liver(Offal):
     carb_g_per_g = .039
     fat_g_per_g = .036
     protein_g_per_g = .204
@@ -149,20 +149,20 @@ if __name__ == '__main__':
 
     fat = Fat()
     meats = [Primal()]
-    organs = [Liver(32), Brain(32)]
+    offals = [Liver(32), Brain(32)]
 
     protein_g_per_meat = (
-        protein_g - sum(organ.protein_g for organ in organs)
+        protein_g - sum(offal.protein_g for offal in offals)
     ) / len(meats)
 
     for meat in meats:
         meat.protein_g = protein_g_per_meat
 
     fat.energy_kc = (energy_kc
-                    - (sum(organ.energy_kc for organ in organs)
+                    - (sum(offal.energy_kc for offal in offals)
                        + sum(meat.energy_kc for meat in meats)))
 
-    foods = [fat] + meats + organs
+    foods = [fat] + meats + offals
 
     for food in foods:
         if not food.energy_kc:
