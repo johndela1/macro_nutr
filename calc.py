@@ -143,23 +143,13 @@ def fat_prop(meal):
             / sum(food.protein_g for food in meal))
 
 
-def by_type(foods, type_):
-    return [food for food in foods if isinstance(food, type_)]
-
-
 if __name__ == '__main__':
     energy_kc = 1900
     protein_g = 70
-    foods = (
-        Fat(),
-        Primal(),
-        Liver(32),
-        Brain(32),
-    )
 
-    fat = by_type(foods, Fat)[0]
-    meats = by_type(foods, Meat)
-    organs = by_type(foods, Organ)
+    fat = Fat()
+    meats = [Primal()]
+    organs = [Liver(32), Brain(32)]
 
     protein_g_per_meat = (
         protein_g - sum(organ.protein_g for organ in organs)
@@ -171,6 +161,8 @@ if __name__ == '__main__':
     fat.energy_kc = (energy_kc
                     - (sum(organ.energy_kc for organ in organs)
                        + sum(meat.energy_kc for meat in meats)))
+
+    foods = [fat] + meats + organs
 
     for food in foods:
         if not food.energy_kc:
