@@ -48,7 +48,7 @@ class Food:
     def energy_kc(self, value):
         self._energy_kc = value
         self._weight_g = value / self.energy_kc_per_g
-        self._protein = self.protein_g_per_g * self._weight_g
+        self._protein_g = self.protein_g_per_g * self._weight_g
         self.carb_g = self.carb_g_per_g * self._weight_g
         self.fat_g = self.fat_g_per_g * self._weight_g
 
