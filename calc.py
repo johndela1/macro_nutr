@@ -9,46 +9,38 @@ https://www.nutritionvalue.org/
 
 class Food:
     carb_g_per_g = 0
-    def __init__(self, weight_g=0):
-        self.energy_kc_per_g = (
-            self.carb_g_per_g*4 + self.fat_g_per_g*9 + self.protein_g_per_g*4)
+    fat_g_per_g = 0
+    protein_g_per_g = 0
+
+    def __init__(self, weight_g):
         self.weight_g = weight_g
+        self.carb_g = self.carb_g_per_g * weight_g
+        self.fat_g = self.fat_g_per_g * weight_g
 
-    @property
-    def weight_g(self):
-        return self._weight_g
+    @classmethod
+    def energy_kc_per_g(cls):
+        return cls.carb_g_per_g*4 + cls.fat_g_per_g*9 + cls.protein_g_per_g*4
 
-    @weight_g.setter
-    def weight_g(self, value):
-        self._weight_g = value
-        self._energy_kc = self.energy_kc_per_g * value
-        self.carb_g = self.carb_g_per_g * value
-        self.fat_g = self.fat_g_per_g * value
-        self._protein_g = self.protein_g_per_g * value
+    @classmethod
+    def from_weight_g(cls, weight_g):
+        obj = cls(weight_g)
+        obj.energy_kc = cls.energy_kc_per_g() * weight_g
+        obj.protein_g = cls.protein_g_per_g * weight_g
+        return obj
 
-    @property
-    def protein_g(self):
-        return self._protein_g
+    @classmethod
+    def from_energy_kc(cls, energy_kc):
+        obj = cls(energy_kc / cls.energy_kc_per_g())
+        obj.energy_kc = energy_kc
+        obj.protein_g = cls.protein_g_per_g * obj.weight_g
+        return obj
 
-    @protein_g.setter
-    def protein_g(self, value):
-        self._protein_g = value
-        self._weight_g = value / self.protein_g_per_g
-        self._energy_kc = self.energy_kc_per_g * self._weight_g
-        self.carb_g = self.carb_g_per_g * self._weight_g
-        self.fat_g = self.fat_g_per_g * self._weight_g
-
-    @property
-    def energy_kc(self):
-        return self._energy_kc
-
-    @energy_kc.setter
-    def energy_kc(self, value):
-        self._energy_kc = value
-        self._weight_g = value / self.energy_kc_per_g
-        self._protein_g = self.protein_g_per_g * self._weight_g
-        self.carb_g = self.carb_g_per_g * self._weight_g
-        self.fat_g = self.fat_g_per_g * self._weight_g
+    @classmethod
+    def from_protein_g(cls, protein_g):
+        obj = cls(protein_g / cls.protein_g_per_g)
+        obj.energy_kc = cls.energy_kc_per_g() * obj.weight_g
+        obj.protein_g = protein_g
+        return obj
 
     def __repr__(self):
         return ', '.join((
@@ -149,19 +141,16 @@ def fat_prop(meal):
 if __name__ == '__main__':
     energy_kc = 1900
     protein_g = 70
-
-    fat = Fat()
-    meats = [Primal()]
-    offals = [Liver(32), Brain(32)]
+    meat_choices = [Primal]
+    offals = [Liver.from_weight_g(64), Brain.from_weight_g(0)]
 
     protein_g_per_meat = (
         protein_g - sum(offal.protein_g for offal in offals)
-    ) / len(meats)
+    ) / len(meat_choices)
 
-    for meat in meats:
-        meat.protein_g = protein_g_per_meat
+    meats = [meat.from_protein_g(protein_g_per_meat) for meat in meat_choices]
 
-    fat.energy_kc = (energy_kc
+    fat = Fat.from_energy_kc(energy_kc
                     - (sum(offal.energy_kc for offal in offals)
                        + sum(meat.energy_kc for meat in meats)))
 
