@@ -7,8 +7,6 @@ https://nutritiondata.self.com/
 https://www.nutritionvalue.org/
 """
 
-import sys
-
 class Food:
     carb_g_per_g = 0
     def __init__(self, weight_g=0):
