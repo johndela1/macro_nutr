@@ -139,16 +139,16 @@ def fat_prop(meal):
 
 
 if __name__ == '__main__':
-    energy_kc = 1900
+    energy_kc = 2000
     protein_g = 70
-    meat_choices = [Primal]
+    avail_meats = [Primal]
     offals = [Liver.from_weight_g(64), Brain.from_weight_g(0)]
 
     protein_g_per_meat = (
         protein_g - sum(offal.protein_g for offal in offals)
-    ) / len(meat_choices)
+    ) / len(avail_meats)
 
-    meats = [meat.from_protein_g(protein_g_per_meat) for meat in meat_choices]
+    meats = [meat.from_protein_g(protein_g_per_meat) for meat in avail_meats]
 
     fat = Fat.from_energy_kc(energy_kc
                     - (sum(offal.energy_kc for offal in offals)
