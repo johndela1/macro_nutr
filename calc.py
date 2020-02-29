@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-"""sources
-https://fdc.nal.usda.gov/
-https://www.calorieking.com/us/en/
-https://nutritiondata.self.com/
-https://www.nutritionvalue.org/
-"""
 
 class Food:
     carb_g_per_g = 0
@@ -13,34 +7,23 @@ class Food:
     protein_g_per_g = 0
 
     def __init__(self, weight_g):
-        self.weight_g = weight_g
         self.carb_g = self.carb_g_per_g * weight_g
         self.fat_g = self.fat_g_per_g * weight_g
+        self.energy_kc = self.energy_kc_per_g() * weight_g
+        self.protein_g = self.protein_g_per_g * weight_g
+        self.weight_g = weight_g
 
     @classmethod
     def energy_kc_per_g(cls):
         return cls.carb_g_per_g*4 + cls.fat_g_per_g*9 + cls.protein_g_per_g*4
 
     @classmethod
-    def from_weight_g(cls, weight_g):
-        obj = cls(weight_g)
-        obj.energy_kc = cls.energy_kc_per_g() * weight_g
-        obj.protein_g = cls.protein_g_per_g * weight_g
-        return obj
-
-    @classmethod
     def from_energy_kc(cls, energy_kc):
-        obj = cls(energy_kc / cls.energy_kc_per_g())
-        obj.energy_kc = energy_kc
-        obj.protein_g = cls.protein_g_per_g * obj.weight_g
-        return obj
+        return cls(energy_kc/cls.energy_kc_per_g())
 
     @classmethod
     def from_protein_g(cls, protein_g):
-        obj = cls(protein_g / cls.protein_g_per_g)
-        obj.energy_kc = cls.energy_kc_per_g() * obj.weight_g
-        obj.protein_g = protein_g
-        return obj
+        return cls(protein_g/cls.protein_g_per_g)
 
     def __repr__(self):
         return ', '.join((
@@ -114,10 +97,20 @@ def fat_prop(meal):
 
 
 if __name__ == '__main__':
-    energy_kc = 2000
+    energy_kc = 1800
+    # pg = energy_kc / (2*9 + 4)
+    # fg = 2 * pg
+    # m = Primal.from_protein_g(pg)
+    # print(f"fat {fg}, meat {m.weight_g}")
     protein_g = 70
-    avail_meats = [Primal]
-    offals = [Liver.from_weight_g(64), Brain.from_weight_g(0)]
+    avail_meats = [Meat.by_fat_percent(20)]
+    offals = [
+        Liver(64),
+        Tendon(0),
+        Spleen(0),
+        SweetBread(0),
+        Brain(0),
+    ]
 
     protein_g_per_meat = (
         protein_g - sum(offal.protein_g for offal in offals)
