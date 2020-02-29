@@ -57,10 +57,6 @@ class Fat(Food):
     protein_g_per_g = .018
 
 
-class Meat(Food):
-    pass
-
-
 class Offal(Food):
     pass
 
@@ -97,37 +93,16 @@ class Tendon(Offal):
     protein_g_per_g = .367
 
 
-class GB45(Meat):
-    fat_g_per_g = .4
-    protein_g_per_g = .14
+class Meat(Food):
+    @classmethod
+    def by_fat_percent(cls, fat_percent):
+        lean_percent = 100 - fat_percent
+        cls.fat_g_per_g = fat_percent * .95 / 100
+        cls.protein_g_per_g = lean_percent * .24 / 100
+        return cls
 
 
-class Primal(Meat):
-    fat_g_per_g = .05
-    protein_g_per_g = .25
-
-
-class GB10(Meat):
-    fat_g_per_g = .1
-    protein_g_per_g = .2
-
-
-class GB20(Meat):
-    fat_g_per_g = .2
-    protein_g_per_g = .172
-
-
-class GB5(Meat):
-    fat_g_per_g = .05
-    protein_g_per_g = .214
-
-
-class Ribeye(Meat):
-    fat_g_per_g = .2
-    protein_g_per_g = .22
-
-
-class Egg(Meat):
+class Egg(Offal):
     carb_g_per_g = .032
     fat_g_per_g = .099
     protein_g_per_g = .126
