@@ -112,7 +112,7 @@ if __name__ == '__main__':
         protein_g - sum(offal.protein_g for offal in offals)
     ) / len(avail_meats)
 
-    meats = [meat.from_protein_g(protein_g_per_meat) for meat in avail_meats]
+    meats = [Meat.from_protein_g(protein_g_per_meat) for Meat in avail_meats]
 
     fat = Fat.from_energy_kc(energy_kc
                     - (sum(offal.energy_kc for offal in offals)
