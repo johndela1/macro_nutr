@@ -76,19 +76,23 @@ class Tendon(Offal):
     protein_g_per_g = .367
 
 
-class Meat(Food):
-    @classmethod
-    def by_fat_percent(cls, fat_percent):
-        lean_percent = 100 - fat_percent
-        cls.fat_g_per_g = fat_percent * .95 / 100
-        cls.protein_g_per_g = lean_percent * .24 / 100
-        return cls
-
-
 class Egg(Offal):
     carb_g_per_g = .032
     fat_g_per_g = .099
     protein_g_per_g = .126
+
+
+def create_meat_class(fat_percent):
+    fat_decimal = fat_percent / 100
+    lean_decimal = 1 - fat_decimal
+    return type(
+        f"Meat_{fat_percent}",
+        (Food,),
+        dict(
+            fat_g_per_g=fat_decimal*.95,
+            protein_g_per_g=lean_decimal*.24,
+        ),
+    )
 
 
 def fat_prop(meal):
@@ -99,9 +103,11 @@ def fat_prop(meal):
 if __name__ == '__main__':
     energy_kc = 1800
     protein_g = 70
-    avail_meats = [Meat.by_fat_percent(20)]
+    avail_meats = [
+        create_meat_class(22),
+    ]
     offals = [
-        Liver(64),
+        Liver(0),
         Tendon(0),
         Spleen(0),
         SweetBread(0),
