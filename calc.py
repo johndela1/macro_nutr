@@ -98,10 +98,6 @@ def fat_prop(meal):
 
 if __name__ == '__main__':
     energy_kc = 1800
-    # pg = energy_kc / (2*9 + 4)
-    # fg = 2 * pg
-    # m = Primal.from_protein_g(pg)
-    # print(f"fat {fg}, meat {m.weight_g}")
     protein_g = 70
     avail_meats = [Meat.by_fat_percent(20)]
     offals = [
