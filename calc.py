@@ -2,24 +2,13 @@
 
 
 class Food:
-    carb_g_per_g = 0
     fat_g_per_g = 0
     protein_g_per_g = 0
 
     def __init__(self, weight_g):
-        self.carb_g = self.carb_g_per_g * weight_g
         self.fat_g = self.fat_g_per_g * weight_g
-        self.energy_kc = self.energy_kc_per_g() * weight_g
         self.protein_g = self.protein_g_per_g * weight_g
         self.weight_g = weight_g
-
-    @classmethod
-    def energy_kc_per_g(cls):
-        return cls.carb_g_per_g*4 + cls.fat_g_per_g*9 + cls.protein_g_per_g*4
-
-    @classmethod
-    def from_energy_kc(cls, energy_kc):
-        return cls(energy_kc/cls.energy_kc_per_g())
 
     @classmethod
     def from_protein_g(cls, protein_g):
@@ -29,7 +18,6 @@ class Food:
         return ', '.join((
             self.__class__.__name__,
             f'grams {self.weight_g:.1f}',
-            f'calories {self.energy_kc:.1f}',
             f'fat {self.fat_g:.1f}',
             f'protein {self.protein_g:.1f}',
         ))
@@ -50,9 +38,8 @@ class Brain(Offal):
 
 
 class Kidney(Offal):
-    carb_g_per_g = .03
-    fat_g_per_g = .031
-    protein_g_per_g = .174
+    fat_g_per_g = 0.031
+    protein_g_per_g = 0.174
 
 
 class Spleen(Offal):
@@ -66,9 +53,8 @@ class SweetBread(Offal):
 
 
 class Liver(Offal):
-    carb_g_per_g = .039
-    fat_g_per_g = .036
-    protein_g_per_g = .204
+    fat_g_per_g = 0.036
+    protein_g_per_g = 0.204
 
 
 class Tendon(Offal):
@@ -77,9 +63,8 @@ class Tendon(Offal):
 
 
 class Egg(Offal):
-    carb_g_per_g = .032
-    fat_g_per_g = .099
-    protein_g_per_g = .126
+    fat_g_per_g = 0.099
+    protein_g_per_g = 0.126
 
 
 def create_meat_class(fat_percent):
@@ -101,13 +86,13 @@ def fat_prop(meal):
 
 
 if __name__ == '__main__':
-    energy_kc = 1800
-    protein_g = 70
+    total_weight_g = 555
+    protein_g = 85
     avail_meats = [
         create_meat_class(22),
     ]
     offals = [
-        Liver(0),
+        Liver(64),
         Tendon(0),
         Spleen(0),
         SweetBread(0),
@@ -120,14 +105,23 @@ if __name__ == '__main__':
 
     meats = [Meat.from_protein_g(protein_g_per_meat) for Meat in avail_meats]
 
-    fat = Fat.from_energy_kc(energy_kc
-                    - (sum(offal.energy_kc for offal in offals)
-                       + sum(meat.energy_kc for meat in meats)))
+    fat = Fat(
+        total_weight_g
+        - (sum(offal.weight_g for offal in offals)
+           + sum(meat.weight_g for meat in meats)))
 
     foods = [fat] + meats + offals
 
     for food in foods:
-        if not food.energy_kc:
-            continue
-        print(food)
+        if food.weight_g:
+            print(food)
     print('fat/protein ', fat_prop(foods))
+    #print(
+    #    sum(food.fat_g for food in foods),
+    #    sum(food.protein_g for food in foods),
+    #)
+    print(
+    sum([
+         sum(food.fat_g*9 for food in foods),
+         sum(food.protein_g*4 for food in foods),
+    ]))
