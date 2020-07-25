@@ -108,15 +108,17 @@ if __name__ == "__main__":
 
     meats = [Meat.from_protein_g(protein_g_per_meat) for Meat in avail_meats]
 
-    fat = Fat(
-        total_weight_g
-        - (
-            sum(offal.weight_g for offal in offals)
-            + sum(meat.weight_g for meat in meats)
+    fats = [
+        Fat(
+            total_weight_g
+            - (
+                sum(offal.weight_g for offal in offals)
+                + sum(meat.weight_g for meat in meats)
+            )
         )
-    )
+    ]
 
-    foods = [fat] + meats + offals
+    foods = fats + meats + offals
 
     for food in foods:
         if food.weight_g:
