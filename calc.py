@@ -12,20 +12,22 @@ class Food:
 
     @classmethod
     def from_protein_g(cls, protein_g):
-        return cls(protein_g/cls.protein_g_per_g)
+        return cls(protein_g / cls.protein_g_per_g)
 
     def __repr__(self):
-        return ', '.join((
-            self.__class__.__name__,
-            f'grams {self.weight_g:.1f}',
-            f'fat {self.fat_g:.1f}',
-            f'protein {self.protein_g:.1f}',
-        ))
+        return ", ".join(
+            (
+                self.__class__.__name__,
+                f"grams {self.weight_g:.1f}",
+                f"fat {self.fat_g:.1f}",
+                f"protein {self.protein_g:.1f}",
+            )
+        )
 
 
 class Fat(Food):
-    fat_g_per_g = .946
-    protein_g_per_g = .018
+    fat_g_per_g = 0.946
+    protein_g_per_g = 0.018
 
 
 class Offal(Food):
@@ -33,8 +35,8 @@ class Offal(Food):
 
 
 class Brain(Offal):
-    fat_g_per_g = .1
-    protein_g_per_g = .1
+    fat_g_per_g = 0.1
+    protein_g_per_g = 0.1
 
 
 class Kidney(Offal):
@@ -43,13 +45,13 @@ class Kidney(Offal):
 
 
 class Spleen(Offal):
-    fat_g_per_g = .03
-    protein_g_per_g = .18
+    fat_g_per_g = 0.03
+    protein_g_per_g = 0.18
 
 
 class SweetBread(Offal):
-    fat_g_per_g = .204
-    protein_g_per_g = .122
+    fat_g_per_g = 0.204
+    protein_g_per_g = 0.122
 
 
 class Liver(Offal):
@@ -58,8 +60,8 @@ class Liver(Offal):
 
 
 class Tendon(Offal):
-    fat_g_per_g = .05
-    protein_g_per_g = .367
+    fat_g_per_g = 0.05
+    protein_g_per_g = 0.367
 
 
 class Egg(Offal):
@@ -74,18 +76,19 @@ def create_meat_class(fat_percent):
         f"Meat_{fat_percent}",
         (Food,),
         dict(
-            fat_g_per_g=fat_decimal*.95,
-            protein_g_per_g=lean_decimal*.24,
+            fat_g_per_g=fat_decimal * 0.95,
+            protein_g_per_g=lean_decimal * 0.24,
         ),
     )
 
 
 def fat_prop(meal):
-    return (sum(food.fat_g for food in meal)
-            / sum(food.protein_g for food in meal))
+    return sum(food.fat_g for food in meal) / sum(
+        food.protein_g for food in meal
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     total_weight_g = 555
     protein_g = 85
     avail_meats = [
@@ -107,21 +110,27 @@ if __name__ == '__main__':
 
     fat = Fat(
         total_weight_g
-        - (sum(offal.weight_g for offal in offals)
-           + sum(meat.weight_g for meat in meats)))
+        - (
+            sum(offal.weight_g for offal in offals)
+            + sum(meat.weight_g for meat in meats)
+        )
+    )
 
     foods = [fat] + meats + offals
 
     for food in foods:
         if food.weight_g:
             print(food)
-    print('fat/protein ', fat_prop(foods))
-    #print(
+    print("fat/protein ", fat_prop(foods))
+    # print(
     #    sum(food.fat_g for food in foods),
     #    sum(food.protein_g for food in foods),
-    #)
+    # )
     print(
-    sum([
-         sum(food.fat_g*9 for food in foods),
-         sum(food.protein_g*4 for food in foods),
-    ]))
+        sum(
+            [
+                sum(food.fat_g * 9 for food in foods),
+                sum(food.protein_g * 4 for food in foods),
+            ]
+        )
+    )
