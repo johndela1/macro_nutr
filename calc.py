@@ -89,13 +89,14 @@ def fat_prop(meal):
 
 
 if __name__ == "__main__":
-    total_weight_g = 555
+    total_weight_g = 550
     protein_g = 85
     avail_meats = [
-        create_meat_class(22),
+        create_meat_class(10),
+        create_meat_class(20),
     ]
     offals = [
-        Liver(64),
+        Liver(0),
         Tendon(0),
         Spleen(0),
         SweetBread(0),
