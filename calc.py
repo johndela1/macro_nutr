@@ -2,8 +2,8 @@
 
 
 class Food:
-    fat_g_per_g = 0
-    protein_g_per_g = 0
+    fat_g_per_g = None
+    protein_g_per_g = None
 
     def __init__(self, weight_g):
         self.fat_g = self.fat_g_per_g * weight_g
@@ -18,9 +18,9 @@ class Food:
         return ", ".join(
             (
                 self.__class__.__name__,
-                f"grams {self.weight_g:.1f}",
-                f"fat {self.fat_g:.1f}",
-                f"protein {self.protein_g:.1f}",
+                f"total weight {self.weight_g:.1f} g",
+                f"fat {self.fat_g:.1f} g",
+                f"protein {self.protein_g:.1f} g",
             )
         )
 
@@ -82,9 +82,18 @@ def create_meat_class(fat_percent):
     )
 
 
-def fat_prop(meal):
-    return sum(food.fat_g for food in meal) / sum(
-        food.protein_g for food in meal
+def fat_prop(foods):
+    return sum(food.fat_g for food in foods) / sum(
+        food.protein_g for food in foods
+    )
+
+
+def energy_total(foods):
+    return sum(
+        [
+            sum(food.fat_g * 9 for food in foods),
+            sum(food.protein_g * 4 for food in foods),
+        ]
     )
 
 
@@ -125,15 +134,4 @@ if __name__ == "__main__":
         if food.weight_g:
             print(food)
     print("fat/protein ", fat_prop(foods))
-    # print(
-    #    sum(food.fat_g for food in foods),
-    #    sum(food.protein_g for food in foods),
-    # )
-    print(
-        sum(
-            [
-                sum(food.fat_g * 9 for food in foods),
-                sum(food.protein_g * 4 for food in foods),
-            ]
-        )
-    )
+    print("energy", energy_total(foods))
