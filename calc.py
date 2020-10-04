@@ -2,10 +2,13 @@
 
 
 class Food:
-    fat_g_per_g = None
-    protein_g_per_g = None
+    fat_g_per_g: int
+    protein_g_per_g: int
 
     def __init__(self, weight_g):
+        if type(self) is __class__:
+            raise TypeError("abstract class")
+
         self.fat_g = self.fat_g_per_g * weight_g
         self.protein_g = self.protein_g_per_g * weight_g
         self.weight_g = weight_g
@@ -31,7 +34,10 @@ class Fat(Food):
 
 
 class Offal(Food):
-    pass
+    def __init__(self, weight_g):
+        if type(self) is __class__:
+            raise TypeError("abstract class")
+        super().__init__(weight_g)
 
 
 class Brain(Offal):
