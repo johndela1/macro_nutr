@@ -18,14 +18,7 @@ class Food:
         return cls(protein_g / cls.protein_g_per_g)
 
     def __repr__(self):
-        return ", ".join(
-            (
-                self.__class__.__name__,
-                f"total weight {self.weight_g:.1f} g",
-                f"fat {self.fat_g:.1f} g",
-                f"protein {self.protein_g:.1f} g",
-            )
-        )
+        return f"{self.__class__.__name__} {self.weight_g:.1f} g"
 
 
 class Fat(Food):
@@ -104,14 +97,13 @@ def energy_total(foods):
 
 
 if __name__ == "__main__":
-    total_weight_g = 550
+    fat_g = 190
     protein_g = 85
     avail_meats = [
-        create_meat_class(10),
-        create_meat_class(20),
+        create_meat_class(15),
     ]
     offals = [
-        Liver(0),
+        Liver(60),
         Tendon(0),
         Spleen(0),
         SweetBread(0),
@@ -126,11 +118,14 @@ if __name__ == "__main__":
 
     fats = [
         Fat(
-            total_weight_g
-            - (
-                sum(offal.weight_g for offal in offals)
-                + sum(meat.weight_g for meat in meats)
+            (
+                fat_g
+                - (
+                    sum(offal.fat_g for offal in offals)
+                    + sum(meat.fat_g for meat in meats)
+                )
             )
+            / Fat.fat_g_per_g
         )
     ]
 
