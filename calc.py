@@ -99,40 +99,16 @@ def energy_total(foods):
 if __name__ == "__main__":
     fat_g = 190
     protein_g = 85
-    avail_meats = [
-        create_meat_class(15),
-    ]
-    offals = [
-        Liver(60),
-        Tendon(0),
-        Spleen(0),
-        SweetBread(0),
-        Brain(0),
-    ]
 
-    protein_g_per_meat = (
-        protein_g - sum(offal.protein_g for offal in offals)
-    ) / len(avail_meats)
-
-    meats = [Meat.from_protein_g(protein_g_per_meat) for Meat in avail_meats]
-
-    fats = [
-        Fat(
-            (
-                fat_g
-                - (
-                    sum(offal.fat_g for offal in offals)
-                    + sum(meat.fat_g for meat in meats)
-                )
-            )
-            / Fat.fat_g_per_g
-        )
-    ]
-
-    foods = fats + meats + offals
+    offal = Liver(60)
+    meat = create_meat_class(fat_percent=15).from_protein_g(
+        protein_g - offal.protein_g)
+    fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
+    foods = fat, meat, offal
 
     for food in foods:
         if food.weight_g:
             print(food)
+
     print("fat/protein ", fat_prop(foods))
     print("energy", energy_total(foods))
