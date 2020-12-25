@@ -38,6 +38,11 @@ class Brain(Offal):
     protein_g_per_g = 0.1
 
 
+class Marrow(Offal):
+    fat_g_per_g = 0.84
+    protein_g_per_g = 0.067
+
+
 class Kidney(Offal):
     fat_g_per_g = 0.031
     protein_g_per_g = 0.174
@@ -101,11 +106,12 @@ if __name__ == "__main__":
     protein_g = 95
 
     offal = Liver(50)
+    offal2 = Marrow(25)
+    offal2 = Brain(25)
     meat = create_meat_class(fat_percent=25).from_protein_g(
-        protein_g - offal.protein_g)
-    fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
-    foods = fat, meat, offal
-
+        protein_g - offal.protein_g - offal2.protein_g)
+    fat = Fat((fat_g - offal.fat_g - offal2.fat_g - meat.fat_g) / Fat.fat_g_per_g)
+    foods = fat, meat, offal, offal2
     for food in foods:
         if food.weight_g:
             print(food)
