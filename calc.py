@@ -81,8 +81,8 @@ def create_meat_class(fat_percent):
         f"Meat_{fat_percent}",
         (Food,),
         dict(
-            fat_g_per_g=fat_decimal * 0.95,
-            protein_g_per_g=lean_decimal * 0.24,
+            fat_g_per_g=fat_decimal * 0.98,
+            protein_g_per_g=lean_decimal * 0.21,
         ),
     )
 
