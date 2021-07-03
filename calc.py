@@ -18,7 +18,7 @@ class Food:
     def from_protein_g(cls, protein_g):
         return cls(protein_g / cls.protein_g_per_g)
 
-    def __repr__(self):
+    def __str__(self):
         return f"{self.__class__.__name__} {self.weight_g:.1f} g"
 
 
