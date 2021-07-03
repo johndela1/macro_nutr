@@ -106,6 +106,7 @@ if __name__ == "__main__":
     fat_g = 200
     protein_g = 75
     offal = Liver(50)
+    # 25g of brain or marrow
     offal2 = Marrow(25)
     meat = create_meat_class(fat_percent=25).from_protein_g(
         protein_g - offal.protein_g - offal2.protein_g
