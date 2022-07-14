@@ -49,10 +49,10 @@ def energy_total(foods):
 
 
 if __name__ == "__main__":
-    fat_g = 215
+    fat_g = 190
     protein_g = 90
 
-    meat = create_meat_class(fat_percent=12).from_protein_g(protein_g)
+    meat = create_meat_class(fat_percent=20).from_protein_g(protein_g)
     fat = Fat((fat_g - meat.fat_g) / Fat.fat_g_per_g)
     foods = fat, meat
     foods = [f.__class__(f.weight_g / 2) for f in foods]
