@@ -68,9 +68,11 @@ if __name__ == "__main__":
     fat_g = 190
     protein_g = 90
 
-    meat = create_meat_class(fat_percent=20).from_protein_g(protein_g)
-    fat = Fat((fat_g - meat.fat_g) / Fat.fat_g_per_g)
-    foods = fat, meat
+    meat = create_meat_class(fat_percent=20).from_protein_g(
+        protein_g - offal.protein_g
+    )
+    fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
+    foods = fat, meat, offal
     foods = [f.__class__(f.weight_g / 2) for f in foods]
 
     for food in foods:
