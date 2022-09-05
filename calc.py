@@ -22,6 +22,22 @@ class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.018
 
+class Offal(Food):
+    def __init__(self, weight_g):
+        if type(self) is __class__:
+            raise TypeError("abstract class")
+        super().__init__(weight_g)
+
+
+class Brain(Offal):
+    fat_g_per_g = 0.1
+    protein_g_per_g = 0.1
+
+
+class Liver(Offal):
+    fat_g_per_g = 0.036
+    protein_g_per_g = 0.204
+
 
 def create_meat_class(fat_percent):
     fat_decimal = fat_percent / 100
