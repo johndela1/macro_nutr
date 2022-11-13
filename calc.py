@@ -65,11 +65,13 @@ def energy_total(foods):
 
 
 if __name__ == "__main__":
-    fat_g = 238
-    protein_g = 80
+    prime_rib_fat=16
+    ground_beef=25
+    fat_g = 255
+    protein_g = 85
     offal = Brain(0)
 
-    meat = create_meat_class(fat_percent=25).from_protein_g(
+    meat = create_meat_class(fat_percent=prime_rib_fat).from_protein_g(
         protein_g - offal.protein_g
     )
     fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
