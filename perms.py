@@ -74,9 +74,8 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
-    target_fat_g = 210
-    target_protein_g = 77
-
+    target_fat_g = 255
+    target_protein_g = 85
     Ground = create_meat_class(fat_percent=45)
     Steak = create_meat_class(fat_percent=5)
     precision = 4
