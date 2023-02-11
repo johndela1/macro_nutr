@@ -64,6 +64,14 @@ def energy_total(foods):
     )
 
 
+def protein_total(foods):
+    return sum(food.protein_g for food in foods)
+
+
+def fat_total(foods):
+    return sum(food.fat_g for food in foods)
+
+
 if __name__ == "__main__":
     ground_beef_fat = 25
     prime_rib_fat = 16
@@ -82,5 +90,8 @@ if __name__ == "__main__":
 
     for food in foods:
         print(food)
+    print()
+    print("total fat", fat_total(foods))
+    print("total protein", protein_total(foods))
     print("fat/protein ", fat_prop(foods))
     print("energy", energy_total(foods))
