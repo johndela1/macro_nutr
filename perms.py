@@ -87,9 +87,10 @@ if __name__ == "__main__":
                 (target_protein_g * precision - i) / precision
             ),
         )
+
         if abs(target_fat_g - fat_total(foods)) > 0.5:
             continue
-        print("------- begin recs -------")
+
         foods = [f.__class__(f.weight_g / 2) for f in foods]
         for food in foods:
             print(food)
