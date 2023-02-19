@@ -19,6 +19,11 @@ class Food:
 
 
 class Fat(Food):
+    fat_g_per_g = 0.71
+    protein_g_per_g = 0.08
+
+
+class Suet(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.018
 
