@@ -79,7 +79,8 @@ if __name__ == "__main__":
     Ground = create_meat_class(fat_percent=45)
     Steak = create_meat_class(fat_percent=5)
     precision = 4
-    for i in range(precision * (target_protein_g + 1)):
+
+    for i in range(precision * target_protein_g + 1):
         foods = (
             Ground.from_protein_g(i / precision),
             Steak.from_protein_g(
