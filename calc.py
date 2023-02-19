@@ -82,9 +82,9 @@ if __name__ == "__main__":
     prime_rib_fat = 16
     top_sirloin_fat = 5
 
-    protein_g = 87
+    protein_g = 82
     offal = Liver(0)
-    fat_g = 249
+    fat_g = 242
 
     meat = create_meat_class(fat_percent=ground_beef_fat).from_protein_g(
         protein_g - offal.protein_g
