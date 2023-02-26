@@ -22,6 +22,9 @@ class Fat(Food):
     fat_g_per_g = 0.8
     protein_g_per_g = 0.05
 
+class Bacon(Food):
+    fat_g_per_g = 0.4
+    protein_g_per_g = 0.13
 
 class Suet(Food):
     fat_g_per_g = 0.946
