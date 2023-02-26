@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     protein_g = 82
     offal = Liver(0)
-    fat_g = 242
+    fat_g = 288
 
     meat = create_meat_class(fat_percent=ground_beef_fat).from_protein_g(
         protein_g - offal.protein_g
