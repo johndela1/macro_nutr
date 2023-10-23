@@ -81,15 +81,12 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
-    ground_beef_fat = 25
-    prime_rib_fat = 16
-    top_sirloin_fat = 5
-
+    beef_fat_percent = 25
     protein_g = 82
     offal = Liver(0)
     fat_g = 288
 
-    meat = create_meat_class(fat_percent=ground_beef_fat).from_protein_g(
+    meat = create_meat_class(fat_percent=beef_fat_percent).from_protein_g(
         protein_g - offal.protein_g
     )
     fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
