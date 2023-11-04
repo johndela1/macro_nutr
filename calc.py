@@ -18,17 +18,13 @@ class Food:
         return f"{self.__class__.__name__} {self.weight_g:.1f}g"
 
 
-class Fat(Food):
-    fat_g_per_g = 0.8
-    protein_g_per_g = 0.05
-
 class Bacon(Food):
     fat_g_per_g = 0.4
     protein_g_per_g = 0.13
 
-class Suet(Food):
+class Fat(Food):
     fat_g_per_g = 0.946
-    protein_g_per_g = 0.018
+    protein_g_per_g = 0.01
 
 class Offal(Food):
     def __init__(self, weight_g):
