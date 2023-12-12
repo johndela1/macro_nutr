@@ -6,6 +6,8 @@ class Food:
     protein_g_per_g: int
 
     def __init__(self, weight_g):
+        if type(self) is __class__:
+            raise TypeError("abstract class")
         self.fat_g = self.fat_g_per_g * weight_g
         self.protein_g = self.protein_g_per_g * weight_g
         self.weight_g = weight_g
