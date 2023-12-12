@@ -78,15 +78,20 @@ def fat_total(foods):
 
 if __name__ == "__main__":
     beef_fat_percent = 25
-    offal = Liver(0)
+    offal = Liver(50)
+    offal2 = Brain(25)
     fat_g = 278
     protein_g = 75
 
     meat = create_meat_class(fat_percent=beef_fat_percent).from_protein_g(
-        protein_g - offal.protein_g
+        protein_g - offal.protein_g - offal2.protein_g
+
     )
-    fat = Fat((fat_g - offal.fat_g - meat.fat_g) / Fat.fat_g_per_g)
-    foods = fat, meat, offal
+    fat = Fat(
+        (fat_g - offal.fat_g - offal2.fat_g - meat.fat_g) / Fat.fat_g_per_g
+    )
+    foods = fat, meat, offal, offal2
+
     foods = [f.__class__(f.weight_g / 2) for f in foods]
 
     for food in foods:
