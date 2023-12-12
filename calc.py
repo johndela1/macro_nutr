@@ -80,7 +80,7 @@ if __name__ == "__main__":
     beef_fat_percent = 25
     offal = Liver(50)
     offal2 = Brain(25)
-    fat_g = 278
+    fat_g = 244
     protein_g = 75
 
     meat = create_meat_class(fat_percent=beef_fat_percent).from_protein_g(
