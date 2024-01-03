@@ -79,6 +79,7 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
+    meals_per_day = 2
     beef_fat_percent = 25
     offal = Liver(50)
     offal2 = Brain(25)
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     )
     foods = fat, meat, offal, offal2
 
-    foods = [f.__class__(f.weight_g / 2) for f in foods]
+    foods = [f.__class__(f.weight_g / meals_per_day) for f in foods]
 
     for food in foods:
         print(food)
