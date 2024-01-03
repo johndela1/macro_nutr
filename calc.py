@@ -81,9 +81,9 @@ def fat_total(foods):
 if __name__ == "__main__":
     meals_per_day = 2
     beef_fat_percent = 25
-    offal = Liver(50)
-    offal2 = Brain(25)
-    fat_g = 244
+    offal = Liver(0)
+    offal2 = Brain(0)
+    fat_g = 263
     protein_g = 75
 
     meat = create_meat_class(fat_percent=beef_fat_percent).from_protein_g(
