@@ -82,7 +82,7 @@ if __name__ == "__main__":
     meals_per_day = 2
     beef_fat_percent = 25
     offal = Liver(0)
-    offal2 = Brain(0)
+    offal2 = Brain(50)
     fat_g = 270
     protein_g = 75
 
