@@ -4,9 +4,9 @@ from calc import *
 
 if __name__ == "__main__":
     offal = Brain(25)
-    meat = create_meat_class(fat_percent=45)(280)
-    meat2 = create_meat_class(fat_percent=25)(33)
-    fat = Fat(0)
+    meat = create_meat_class(fat_percent=45)(128)
+    meat2 = create_meat_class(fat_percent=25)(128)
+    fat = Fat(47)
     foods = fat, meat, meat2, offal
 
     for food in foods:
