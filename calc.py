@@ -38,11 +38,10 @@ class Liver(Food):
     protein_g_per_g = 0.204
 
 
-def create_meat_class(fat_percent):
-    fat_decimal = fat_percent / 100
+def create_meat_class(fat_decimal):
     lean_decimal = 1 - fat_decimal
     return type(
-        f"Meat{fat_percent}",
+        f"Meat{int(fat_decimal*100)}",
         (Food,),
         dict(
             fat_g_per_g=fat_decimal * 0.98,
@@ -73,13 +72,13 @@ def fat_total(foods):
 
 if __name__ == "__main__":
     meals_per_day = 2
-    beef_fat_percent = 25
+    beef_fat_decimal = .25
     offal = Liver(0)
     offal2 = Brain(50)
     fat_g = 270
     protein_g = 75
 
-    meat = create_meat_class(fat_percent=beef_fat_percent).from_protein_g(
+    meat = create_meat_class(fat_decimal=beef_fat_decimal).from_protein_g(
         protein_g - offal.protein_g - offal2.protein_g
     )
     fat = Fat(
