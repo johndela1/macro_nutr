@@ -3,64 +3,67 @@ package main
 import "fmt"
 
 type food struct {
-	fat_g_per_g     float32
-	protein_g_per_g float32
-	weight_g        float32
-	fat_g           float32
-	protein_g       float32
+	typ          string
+	fatGperG     float64
+	proteinGperG float64
+	weightG      float64
+	fatG         float64
+	proteinG     float64
 }
 
-type fat struct {
-	food
+func (f food) String() string {
+	return fmt.Sprintf("%s: %.1f g", f.typ, f.weightG)
 }
 
-func NewFat(weight_g float32) fat {
-	f := fat{}
-	f.fat_g_per_g = .946
-	f.protein_g_per_g = .01
-	f.weight_g = weight_g
-	f.fat_g = f.fat_g_per_g * weight_g
-	f.protein_g = f.protein_g_per_g * weight_g
+func NewFood(typ string, weightG, fatGperG, proteinGperG float64) food {
+	f := food{}
+	f.typ = typ
+	f.fatGperG = fatGperG
+	f.proteinGperG = proteinGperG
+	f.weightG = weightG
+	f.fatG = f.fatGperG * weightG
+	f.proteinG = f.proteinGperG * weightG
 	return f
+
 }
 
-func NewFatFromProteinG(protein_g float32) fat {
-	f := NewFat(0)
-	return NewFat(protein_g / f.protein_g_per_g)
+func NewFat(weightG float64) food {
+	fatGperG := .946
+	proteinGperG := .01
+	return NewFood("fat", weightG, fatGperG, proteinGperG)
 }
 
-func (f fat) String() string {
-	return fmt.Sprintf("fat: %f g", f.weight_g)
+func NewLiver(weightG float64) food {
+	fatGperG := .036
+	proteinGperG := .204
+	return NewFood("liver", weightG, fatGperG, proteinGperG)
 }
 
-type meat struct {
-	food
+func NewBrain(weightG float64) food {
+	fatGperG := .1
+	proteinGperG := .1
+	return NewFood("brain", weightG, fatGperG, proteinGperG)
 }
 
-func NewMeat(weight_g float32, fat_percent float32) meat {
-	fat_decimal := fat_percent / 100
-	lean_decimal := 1 - fat_decimal
-	m := meat{}
-	m.fat_g_per_g = fat_decimal * .98
-	m.protein_g_per_g = lean_decimal * .21
-	m.weight_g = weight_g
-	m.fat_g = m.fat_g_per_g * weight_g
-	m.protein_g = m.protein_g_per_g * weight_g
-	return m
-}
-
-func NewMeatFromProteinG(protein_g float32, fat_percent float32) meat {
-	m := NewMeat(0, fat_percent)
-	return NewMeat(protein_g/m.protein_g_per_g, fat_percent)
-}
-
-func (m meat) String() string {
-	return fmt.Sprintf("meat: %f g", m.weight_g)
+func NewMeatFromProteinG(proteinG float64, fatDecimal float64) food {
+	leanDecimal := 1 - fatDecimal
+	fatGperG := fatDecimal * .98
+	proteinGperG := leanDecimal * .21
+	return NewFood("meat", proteinG/proteinGperG, fatGperG, proteinGperG)
 }
 
 func main() {
-	meat := NewMeatFromProteinG(100, 25)
-	fat := NewFat(100)
-	foods := []any{meat, fat}
+	mealsPerDay := 2.0
+	beefFatDecimal := .25
+	offal := NewLiver(0)
+	offal2 := NewBrain(50)
+	fatG := 270.0
+	proteinG := 75.0
+
+	meat := NewMeatFromProteinG(
+		proteinG-offal.proteinG-offal2.proteinG, beefFatDecimal)
+	fat := NewFat(
+		(fatG - offal.fatG - offal2.fatG - meat.fatG) / NewFat(0).fatGperG)
+	foods := []food{fat, meat, offal, offal2}
 	fmt.Println(foods)
 }
