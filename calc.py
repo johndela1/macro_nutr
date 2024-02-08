@@ -28,19 +28,12 @@ class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.01
 
-class Offal(Food):
-    def __init__(self, weight_g):
-        if type(self) is __class__:
-            raise TypeError("abstract class")
-        super().__init__(weight_g)
-
-
-class Brain(Offal):
+class Brain(Food):
     fat_g_per_g = 0.1
     protein_g_per_g = 0.1
 
 
-class Liver(Offal):
+class Liver(Food):
     fat_g_per_g = 0.036
     protein_g_per_g = 0.204
 
