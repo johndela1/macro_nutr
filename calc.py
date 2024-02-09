@@ -91,7 +91,7 @@ if __name__ == "__main__":
     for food in foods:
         print(food)
     print()
-    print("total fat", fat_total(foods))
-    print("total protein", protein_total(foods))
-    print("fat/protein ", fat_prop(foods))
-    print("energy", energy_total(foods))
+    print(f"total fat {fat_total(foods):.1f}")
+    print(f"total protein {protein_total(foods):.1f}")
+    print(f"fat/protein {fat_prop(foods):.1f}")
+    print(f"energy {energy_total(foods):.1f}")
