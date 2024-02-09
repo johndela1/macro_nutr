@@ -52,6 +52,39 @@ func NewMeatFromProteinG(proteinG float64, fatDecimal float64) food {
 	return NewFood("meat", proteinG/proteinGperG, fatGperG, proteinGperG)
 }
 
+func fatTotal(foods []food) float64 {
+	var sum float64
+	for _, f := range foods {
+		sum += f.fatG
+	}
+	return sum
+}
+
+func proteinTotal(foods []food) float64 {
+	var sum float64
+	for _, f := range foods {
+		sum += f.proteinG
+	}
+	return sum
+}
+
+func fatProp(foods []food) float64 {
+	var fatSum, proteinSum float64
+	for _, f := range foods {
+		fatSum += f.fatG
+		proteinSum += f.proteinG
+	}
+	return fatSum / proteinSum
+}
+
+func energyTotal(foods []food) float64 {
+	var sum float64
+	for _, f := range foods {
+		sum += f.fatG*9 + f.proteinG*4
+	}
+	return sum
+}
+
 func main() {
 	mealsPerDay := 2.0
 	beefFatDecimal := .25
@@ -65,5 +98,21 @@ func main() {
 	fat := NewFat(
 		(fatG - offal.fatG - offal2.fatG - meat.fatG) / NewFat(0).fatGperG)
 	foods := []food{fat, meat, offal, offal2}
-	fmt.Println(foods)
+
+	for i := 0; i < len(foods); i++ {
+		p := &foods[i]
+		p.weightG /= mealsPerDay
+		p.fatG /= mealsPerDay
+		p.proteinG /= mealsPerDay
+	}
+
+	for _, food := range foods {
+		fmt.Println(food)
+	}
+	fmt.Println()
+
+	fmt.Printf("total fat %.1f\n", fatTotal(foods))
+	fmt.Printf("total protein %.1f\n", proteinTotal(foods))
+	fmt.Printf("fat/protein %.1f\n", fatProp(foods))
+	fmt.Printf("energy %.1f\n", energyTotal(foods))
 }
