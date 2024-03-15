@@ -39,6 +39,7 @@ class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.01
 
+
 class Brain(Food):
     fat_g_per_g = 0.1
     protein_g_per_g = 0.1
