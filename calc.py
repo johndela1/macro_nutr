@@ -30,6 +30,11 @@ class Lamb(Food):
     protein_g_per_g = 0.17
 
 
+class GroundPork(Food):
+    fat_g_per_g = 0.27
+    protein_g_per_g = 0.14
+
+
 class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.01
