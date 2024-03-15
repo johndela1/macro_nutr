@@ -24,6 +24,12 @@ class Bacon(Food):
     fat_g_per_g = 0.4
     protein_g_per_g = 0.13
 
+
+class Lamb(Food):
+    fat_g_per_g = 0.19
+    protein_g_per_g = 0.17
+
+
 class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.01
