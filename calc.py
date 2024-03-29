@@ -62,6 +62,11 @@ def create_meat_class(fat_decimal, name="Ground"):
     )
 
 
+Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
+Meat45 = create_meat_class(fat_decimal=0.45)
+Meat25 = create_meat_class(fat_decimal=0.25)
+
+
 def fat_prop(foods):
     return sum(food.fat_g for food in foods) / sum(
         food.protein_g for food in foods
@@ -87,9 +92,7 @@ if __name__ == "__main__":
     protein_g = 75
     meals_per_day = 2
 
-    Ribeye = create_meat_class(fat_decimal=0.15)
-    Ground = create_meat_class(fat_decimal=0.45)
-    meat2 = Ground(150)
+    meat2 = Meat45(150)
     offal = Brain(0)
     offal2 = Liver(0)
 
