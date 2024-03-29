@@ -50,7 +50,7 @@ class Liver(Food):
     protein_g_per_g = 0.204
 
 
-def create_meat_class(fat_decimal, name):
+def create_meat_class(fat_decimal, name="Ground"):
     lean_decimal = 1 - fat_decimal
     return type(
         f"{name}{int(fat_decimal*100)}",
@@ -87,8 +87,8 @@ if __name__ == "__main__":
     protein_g = 75
     meals_per_day = 2
 
-    Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
-    Ground = create_meat_class(fat_decimal=0.45, name="Ground")
+    Ribeye = create_meat_class(fat_decimal=0.15)
+    Ground = create_meat_class(fat_decimal=0.45)
     meat2 = Ground(150)
     offal = Brain(0)
     offal2 = Liver(0)
