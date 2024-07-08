@@ -65,6 +65,7 @@ def create_meat_class(fat_decimal, name="Ground"):
 Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
 Meat45 = create_meat_class(fat_decimal=0.45)
 Meat25 = create_meat_class(fat_decimal=0.25)
+Meat15 = create_meat_class(fat_decimal=0.15)
 
 
 def fat_prop(foods):
