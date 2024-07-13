@@ -89,13 +89,13 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
-    fat_g = 250
+    fat_g = 185
     protein_g = 75
     meals_per_day = 2
 
-    meat2 = Meat45(300)
+    meat2 = Meat25(0)
     offal = Brain(0)
-    offal2 = Liver(24)
+    offal2 = Liver(0)
 
     meat = Meat25.from_protein_g(
         protein_g - meat2.protein_g - offal.protein_g - offal2.protein_g
