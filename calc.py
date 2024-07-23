@@ -89,7 +89,7 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
-    fat_g = 185
+    fat_g = 175
     protein_g = 75
     meals_per_day = 2
 
