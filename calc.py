@@ -25,11 +25,6 @@ class Bacon(Food):
     protein_g_per_g = 0.13
 
 
-class Lamb(Food):
-    fat_g_per_g = 0.19
-    protein_g_per_g = 0.17
-
-
 class GroundPork(Food):
     fat_g_per_g = 0.27
     protein_g_per_g = 0.14
@@ -63,9 +58,11 @@ def create_meat_class(fat_decimal, name="Ground"):
 
 
 Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
-Meat45 = create_meat_class(fat_decimal=0.45)
-Meat25 = create_meat_class(fat_decimal=0.25)
+Lamb = create_meat_class(fat_decimal=0.10, name="Lamb")
 Meat15 = create_meat_class(fat_decimal=0.15)
+Meat20 = create_meat_class(fat_decimal=0.20)
+Meat25 = create_meat_class(fat_decimal=0.25)
+Meat45 = create_meat_class(fat_decimal=0.45)
 
 
 def fat_prop(foods):
