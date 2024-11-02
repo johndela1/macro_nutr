@@ -58,7 +58,7 @@ def create_meat_class(fat_decimal, name="Ground"):
 
 
 Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
-Lamb = create_meat_class(fat_decimal=0.10, name="Lamb")
+Lamb = create_meat_class(fat_decimal=0.15, name="Lamb")
 Meat15 = create_meat_class(fat_decimal=0.15)
 Meat20 = create_meat_class(fat_decimal=0.20)
 Meat25 = create_meat_class(fat_decimal=0.25)
@@ -90,18 +90,18 @@ if __name__ == "__main__":
     protein_g = 75
     meals_per_day = 2
 
-    meat2 = Meat25(0)
+    lamb = Lamb(223)
     offal = Brain(0)
     offal2 = Liver(0)
 
     meat = Meat25.from_protein_g(
-        protein_g - meat2.protein_g - offal.protein_g - offal2.protein_g
+        protein_g - lamb.protein_g - offal.protein_g - offal2.protein_g
     )
     fat = Fat(
-        (fat_g - offal.fat_g - offal2.fat_g - meat.fat_g - meat2.fat_g)
+        (fat_g - offal.fat_g - offal2.fat_g - meat.fat_g - lamb.fat_g)
         / Fat.fat_g_per_g
     )
-    foods = fat, meat, meat2, offal, offal2
+    foods = fat, meat, lamb, offal, offal2
 
     foods = [f.__class__(f.weight_g / meals_per_day) for f in foods]
 
