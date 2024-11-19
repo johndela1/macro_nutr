@@ -61,6 +61,7 @@ def create_meat_class(fat_decimal, name="Ground"):
 
 Ribeye = create_meat_class(fat_decimal=0.15, name="Ribeye")
 Lamb = create_meat_class(fat_decimal=0.12, name="Lamb")
+Chuck = create_meat_class(fat_decimal=0.13, name="Chuck")
 Meat15 = create_meat_class(fat_decimal=0.15)
 Meat20 = create_meat_class(fat_decimal=0.20)
 Meat25 = create_meat_class(fat_decimal=0.25)
@@ -118,7 +119,7 @@ if __name__ == "__main__":
     offal = Brain(0)
     offal2 = Liver(0)
 
-    meat1 = Lamb(guess(Lamb, Meat25))
+    meat1 = Chuck(guess(Chuck, Meat25))
     meat2 = Meat25.from_protein_g(
         protein_g - meat1.protein_g - offal.protein_g - offal2.protein_g
     )
