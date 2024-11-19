@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from statistics import mean
+
 
 class Food:
     fat_g_per_g: int
@@ -85,23 +87,47 @@ def fat_total(foods):
     return sum(food.fat_g for food in foods)
 
 
+def good_enough(guess, M1, M2):
+    meat1 = M1(guess)
+    meat2 = M2.from_protein_g(
+        protein_g - meat1.protein_g - offal.protein_g - offal2.protein_g
+    )
+    return abs(meat1.weight_g - meat2.weight_g) < 1
+
+
+def improve(guess, M1, M2):
+    meat1 = M1(guess)
+    meat2 = M2.from_protein_g(
+        protein_g - meat1.protein_g - offal.protein_g - offal2.protein_g
+    )
+    return mean([guess, meat2.weight_g])
+
+
+def guess(M1, M2):
+    guess = 1
+    while not good_enough(guess, M1, M2):
+        guess = improve(guess, M1, M2)
+    return guess
+
+
 if __name__ == "__main__":
     fat_g = 217
     protein_g = 75
     meals_per_day = 2
 
-    lamb = Lamb(223)
     offal = Brain(0)
     offal2 = Liver(0)
 
-    meat = Meat25.from_protein_g(
-        protein_g - lamb.protein_g - offal.protein_g - offal2.protein_g
+    meat1 = Lamb(guess(Lamb, Meat25))
+    meat2 = Meat25.from_protein_g(
+        protein_g - meat1.protein_g - offal.protein_g - offal2.protein_g
     )
+
     fat = Fat(
-        (fat_g - offal.fat_g - offal2.fat_g - meat.fat_g - lamb.fat_g)
+        (fat_g - offal.fat_g - offal2.fat_g - meat2.fat_g - meat1.fat_g)
         / Fat.fat_g_per_g
     )
-    foods = fat, meat, lamb, offal, offal2
+    foods = fat, meat2, meat1, offal, offal2
 
     foods = [f.__class__(f.weight_g / meals_per_day) for f in foods]
 
