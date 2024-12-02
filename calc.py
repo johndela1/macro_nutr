@@ -59,7 +59,7 @@ def create_meat_class(fat_decimal, name="Ground"):
     )
 
 
-Ribeye = create_meat_class(fat_decimal=0.18, name="Ribeye")
+Ribeye = create_meat_class(fat_decimal=0.20, name="Ribeye")
 Lamb = create_meat_class(fat_decimal=0.12, name="Lamb")
 Chuck = create_meat_class(fat_decimal=0.11, name="Chuck")
 Meat25 = create_meat_class(fat_decimal=0.25)
