@@ -111,7 +111,7 @@ def guess(M1, M2):
 if __name__ == "__main__":
     beef_density_g_per_ml = 0.96
 
-    fat_g = 225
+    fat_g = 238
     protein_g = 75
     meals_per_day = 2
 
