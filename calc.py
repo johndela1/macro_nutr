@@ -122,9 +122,12 @@ if __name__ == "__main__":
     fat = Fat(
         (fat_g - offal.fat_g - meat2.fat_g - meat1.fat_g) / Fat.fat_g_per_g
     )
-    foods = fat, meat2, meat1, offal, offal2
 
-    foods = [f.__class__(f.weight_g / meals_per_day) for f in foods]
+    foods = [
+        f.__class__(f.weight_g / meals_per_day)
+        for f in [fat, meat1, meat2, offal]
+        if f.weight_g
+    ]
 
     for food in foods:
         print(food)
