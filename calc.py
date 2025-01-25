@@ -120,7 +120,7 @@ if __name__ == "__main__":
     )
 
     fat = Fat(
-        (fat_g - offal.fat_g - meat2.fat_g - meat1.fat_g) / Fat.fat_g_per_g
+        (fat_g - offal.fat_g - meat1.fat_g - meat2.fat_g) / Fat.fat_g_per_g
     )
 
     foods = [
