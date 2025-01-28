@@ -27,7 +27,7 @@ class Fat(Food):
     protein_g_per_g = 0.01
 
 
-def create_meat_class(lean_decimal, name="Ground"):
+def create_meat_class(lean_decimal, name="ground"):
     if not (0 <= lean_decimal <= 1):
         raise ValueError("lean_decimal must be between 0 and 1")
     fat_decimal = 1 - lean_decimal
@@ -81,9 +81,9 @@ def guess(M1, M2):
 
 
 if __name__ == "__main__":
-    Ribeye = create_meat_class(lean_decimal=0.80, name="Ribeye")
-    Lamb = create_meat_class(lean_decimal=0.88, name="Lamb")
-    Chuck = create_meat_class(lean_decimal=0.87, name="Chuck")
+    Ribeye = create_meat_class(lean_decimal=0.80, name="ribeye")
+    Lamb = create_meat_class(lean_decimal=0.88, name="lamb")
+    Chuck = create_meat_class(lean_decimal=0.87, name="chuck")
     Meat75 = create_meat_class(lean_decimal=0.75)
     Meat55 = create_meat_class(lean_decimal=0.55)
     Polluck = create_meat_class(0.90, "polluck")
