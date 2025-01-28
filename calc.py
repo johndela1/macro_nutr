@@ -59,12 +59,6 @@ def create_meat_class(fat_decimal, name="Ground"):
     )
 
 
-Ribeye = create_meat_class(fat_decimal=0.20, name="Ribeye")
-Lamb = create_meat_class(fat_decimal=0.12, name="Lamb")
-Chuck = create_meat_class(fat_decimal=0.13, name="Chuck")
-Meat25 = create_meat_class(fat_decimal=0.25)
-
-
 def fat_prop(foods):
     return sum(food.fat_g for food in foods) / sum(
         food.protein_g for food in foods
@@ -105,7 +99,12 @@ def guess(M1, M2):
 
 
 if __name__ == "__main__":
-    beef_density_g_per_ml = 0.96
+    Ribeye = create_meat_class(fat_decimal=0.20, name="Ribeye")
+    Lamb = create_meat_class(fat_decimal=0.12, name="Lamb")
+    Chuck = create_meat_class(fat_decimal=0.13, name="Chuck")
+    Meat25 = create_meat_class(fat_decimal=0.25)
+    Meat45 = create_meat_class(fat_decimal=0.45)
+    Polluck = create_meat_class(0.10, "polluck")
 
     fat_g = 235
     protein_g = 80
