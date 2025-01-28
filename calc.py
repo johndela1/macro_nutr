@@ -22,29 +22,9 @@ class Food:
         return f"{self.__class__.__name__} {self.weight_g:.1f} g"
 
 
-class Bacon(Food):
-    fat_g_per_g = 0.4
-    protein_g_per_g = 0.13
-
-
-class GroundPork(Food):
-    fat_g_per_g = 0.27
-    protein_g_per_g = 0.14
-
-
 class Fat(Food):
     fat_g_per_g = 0.946
     protein_g_per_g = 0.01
-
-
-class Brain(Food):
-    fat_g_per_g = 0.1
-    protein_g_per_g = 0.1
-
-
-class Liver(Food):
-    fat_g_per_g = 0.036
-    protein_g_per_g = 0.204
 
 
 def create_meat_class(fat_decimal, name="Ground"):
@@ -81,13 +61,13 @@ def fat_total(foods):
 
 def good_enough(guess, M1, M2):
     meat1 = M1(guess)
-    meat2 = M2.from_protein_g(protein_g - meat1.protein_g - offal.protein_g)
+    meat2 = M2.from_protein_g(protein_g - meat1.protein_g)
     return abs(meat1.weight_g - meat2.weight_g) < 1
 
 
 def improve(guess, M1, M2):
     meat1 = M1(guess)
-    meat2 = M2.from_protein_g(protein_g - meat1.protein_g - offal.protein_g)
+    meat2 = M2.from_protein_g(protein_g - meat1.protein_g)
     return mean([guess, meat2.weight_g])
 
 
@@ -110,21 +90,15 @@ if __name__ == "__main__":
     protein_g = 80
     meals_per_day = 2
 
-    offal = Brain(0)
-
     meat1_cls = Chuck
     meat1 = meat1_cls(guess(meat1_cls, Meat25))
-    meat2 = Meat25.from_protein_g(
-        protein_g - meat1.protein_g - offal.protein_g
-    )
+    meat2 = Meat25.from_protein_g(protein_g - meat1.protein_g)
 
-    fat = Fat(
-        (fat_g - offal.fat_g - meat1.fat_g - meat2.fat_g) / Fat.fat_g_per_g
-    )
+    fat = Fat((fat_g - meat1.fat_g - meat2.fat_g) / Fat.fat_g_per_g)
 
     foods = [
         type(f)(f.weight_g / meals_per_day)
-        for f in (fat, meat1, meat2, offal)
+        for f in (fat, meat1, meat2)
         if f.weight_g
     ]
 
