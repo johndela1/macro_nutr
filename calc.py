@@ -28,6 +28,8 @@ class Fat(Food):
 
 
 def create_meat_class(lean_decimal, name="Ground"):
+    if not (0 <= lean_decimal <= 1):
+        raise ValueError("lean_decimal must be between 0 and 1")
     fat_decimal = 1 - lean_decimal
     return type(
         f"{name}{int(lean_decimal*100)}",
