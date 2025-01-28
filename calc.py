@@ -124,8 +124,8 @@ if __name__ == "__main__":
     )
 
     foods = [
-        f.__class__(f.weight_g / meals_per_day)
-        for f in [fat, meat1, meat2, offal]
+        type(f)(f.weight_g / meals_per_day)
+        for f in (fat, meat1, meat2, offal)
         if f.weight_g
     ]
 
