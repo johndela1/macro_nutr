@@ -27,10 +27,10 @@ class Fat(Food):
     protein_g_per_g = 0.01
 
 
-def create_meat_class(fat_decimal, name="Ground"):
-    lean_decimal = 1 - fat_decimal
+def create_meat_class(lean_decimal, name="Ground"):
+    fat_decimal = 1 - lean_decimal
     return type(
-        f"{name}{int(fat_decimal*100)}",
+        f"{name}{int(lean_decimal*100)}",
         (Food,),
         dict(
             fat_g_per_g=fat_decimal * 0.98,
@@ -79,20 +79,19 @@ def guess(M1, M2):
 
 
 if __name__ == "__main__":
-    Ribeye = create_meat_class(fat_decimal=0.20, name="Ribeye")
-    Lamb = create_meat_class(fat_decimal=0.12, name="Lamb")
-    Chuck = create_meat_class(fat_decimal=0.13, name="Chuck")
-    Meat25 = create_meat_class(fat_decimal=0.25)
-    Meat45 = create_meat_class(fat_decimal=0.45)
-    Polluck = create_meat_class(0.10, "polluck")
+    Ribeye = create_meat_class(lean_decimal=0.80, name="Ribeye")
+    Lamb = create_meat_class(lean_decimal=0.88, name="Lamb")
+    Chuck = create_meat_class(lean_decimal=0.87, name="Chuck")
+    Meat75 = create_meat_class(lean_decimal=0.75)
+    Meat55 = create_meat_class(lean_decimal=0.55)
+    Polluck = create_meat_class(0.90, "polluck")
 
     fat_g = 235
     protein_g = 80
     meals_per_day = 2
 
-    meat1_cls = Chuck
-    meat1 = meat1_cls(guess(meat1_cls, Meat25))
-    meat2 = Meat25.from_protein_g(protein_g - meat1.protein_g)
+    meat1 = Polluck(0)
+    meat2 = Polluck.from_protein_g(protein_g - meat1.protein_g)
 
     fat = Fat((fat_g - meat1.fat_g - meat2.fat_g) / Fat.fat_g_per_g)
 
