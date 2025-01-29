@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from statistics import mean
-
 
 class Food:
     fat_g_per_g: int
@@ -19,24 +17,23 @@ class Food:
         return cls(protein_g / cls.protein_g_per_g)
 
     def __str__(self):
-        return f"{self.__class__.__name__} {self.weight_g:.1f} g"
+        return f"{self.__class__.__name__.lower()} {self.weight_g:.1f} g"
 
 
-class Fat(Food):
+class Suet(Food):
     fat_g_per_g = 0.946
-    protein_g_per_g = 0.01
+    protein_g_per_g = 0.018
 
 
-def create_meat(lean_decimal, name="ground"):
+def create_meat(lean_decimal, name):
     if not (0 <= lean_decimal <= 1):
         raise ValueError("lean_decimal must be between 0 and 1")
     fat_decimal = 1 - lean_decimal
     return type(
-        f"{name}{int(lean_decimal*100)}",
+        name,
         (Food,),
         dict(
-            fat_g_per_g=fat_decimal * 0.98,
-            protein_g_per_g=lean_decimal * 0.21,
+            fat_g_per_g=fat_decimal * 0.98, protein_g_per_g=lean_decimal * 0.22
         ),
     )
 
@@ -61,41 +58,20 @@ def fat_total(foods):
     return sum(food.fat_g for food in foods)
 
 
-def good_enough(guess, M1, M2):
-    meat1 = M1(guess)
-    meat2 = M2.from_protein_g(protein_g - meat1.protein_g)
-    return abs(meat1.weight_g - meat2.weight_g) < 1
-
-
-def improve(guess, M1, M2):
-    meat1 = M1(guess)
-    meat2 = M2.from_protein_g(protein_g - meat1.protein_g)
-    return mean([guess, meat2.weight_g])
-
-
-def guess(M1, M2):
-    guess = 1
-    while not good_enough(guess, M1, M2):
-        guess = improve(guess, M1, M2)
-    return guess
-
-
 if __name__ == "__main__":
     Ribeye = create_meat(lean_decimal=0.80, name="ribeye")
     Lamb = create_meat(lean_decimal=0.88, name="lamb")
     Chuck = create_meat(lean_decimal=0.87, name="chuck")
-    Meat75 = create_meat(lean_decimal=0.75)
-    Meat55 = create_meat(lean_decimal=0.55)
-    Polluck = create_meat(0.90, "polluck")
+    Ground75 = create_meat(lean_decimal=0.75, name="ground75")
+    Ground55 = create_meat(0.55, "ground55")
 
     fat_g = 235
     protein_g = 80
     meals_per_day = 2
 
-    meat1 = Polluck(0)
-    meat2 = Polluck.from_protein_g(protein_g - meat1.protein_g)
-
-    fat = Fat((fat_g - meat1.fat_g - meat2.fat_g) / Fat.fat_g_per_g)
+    meat1 = Chuck(0)
+    meat2 = Ground75.from_protein_g(protein_g - meat1.protein_g)
+    fat = Suet((fat_g - meat1.fat_g - meat2.fat_g) / Suet.fat_g_per_g)
 
     foods = [
         type(f)(f.weight_g / meals_per_day)
