@@ -25,6 +25,11 @@ class Suet(Food):
     protein_g_per_g = 0.018
 
 
+class Salmon(Food):
+    fat_g_per_g = 0.11
+    protein_g_per_g = 0.20
+
+
 def create_meat(lean_decimal, name):
     if not (0 <= lean_decimal <= 1):
         raise ValueError("lean_decimal must be between 0 and 1")
