@@ -64,11 +64,11 @@ def fat_total(foods):
 
 
 if __name__ == "__main__":
-    Ribeye = create_meat(lean_decimal=0.80, name="ribeye")
-    Lamb = create_meat(lean_decimal=0.88, name="lamb")
-    Chuck = create_meat(lean_decimal=0.87, name="chuck")
-    Ground75 = create_meat(lean_decimal=0.75, name="ground75")
-    Ground55 = create_meat(0.55, "ground55")
+    Ribeye = create_meat(lean_decimal=0.80, name="Ribeye")
+    Lamb = create_meat(lean_decimal=0.88, name="Lamb")
+    Chuck = create_meat(lean_decimal=0.87, name="Chuck")
+    Ground75 = create_meat(lean_decimal=0.75, name="Ground75")
+    Ground55 = create_meat(0.55, "Ground55")
 
     fat_g = 235
     protein_g = 80
