@@ -70,7 +70,7 @@ if __name__ == "__main__":
     Ground75 = create_meat(lean_decimal=0.75, name="Ground75")
     Ground55 = create_meat(0.55, "Ground55")
 
-    fat_g = 235
+    fat_g = 220
     protein_g = 80
     meals_per_day = 2
 
