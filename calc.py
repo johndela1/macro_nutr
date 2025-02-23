@@ -5,29 +5,25 @@ class Food:
     fat_g_per_g: int
     protein_g_per_g: int
 
-    def __init__(self, weight_g):
+    def __init__(self, weight_g=0):
         if type(self) is __class__:
             raise TypeError("abstract class")
-        self.fat_g = self.fat_g_per_g * weight_g
-        self.protein_g = self.protein_g_per_g * weight_g
         self.weight_g = weight_g
 
     @classmethod
     def from_protein_g(cls, protein_g):
         return cls(protein_g / cls.protein_g_per_g)
 
+    @property
+    def fat_g(self):
+        return self.fat_g_per_g * self.weight_g
+
+    @property
+    def protein_g(self):
+        return self.protein_g_per_g * self.weight_g
+
     def __str__(self):
         return f"{self.__class__.__name__.lower()} {self.weight_g:.1f} g"
-
-
-class Suet(Food):
-    fat_g_per_g = 0.946
-    protein_g_per_g = 0.018
-
-
-class Salmon(Food):
-    fat_g_per_g = 0.11
-    protein_g_per_g = 0.20
 
 
 def create_meat(lean_decimal, name):
@@ -63,6 +59,27 @@ def fat_total(foods):
     return sum(food.fat_g for food in foods)
 
 
+def balance_protein(foods, target_protein_g):
+    guess = 0
+    free_foods = [f for f in foods if f.weight_g == 0]
+    if len(free_foods) == 0:
+        raise ValueError("no free foods")
+    while abs(err := target_protein_g - protein_total(foods)) > 0.1:
+        guess += err / len(foods)
+        for f in free_foods:
+            f.weight_g = guess
+
+
+class Suet(Food):
+    fat_g_per_g = 0.946
+    protein_g_per_g = 0.018
+
+
+class Salmon(Food):
+    fat_g_per_g = 0.11
+    protein_g_per_g = 0.20
+
+
 if __name__ == "__main__":
     Ribeye = create_meat(lean_decimal=0.80, name="Ribeye")
     Lamb = create_meat(lean_decimal=0.88, name="Lamb")
@@ -70,24 +87,20 @@ if __name__ == "__main__":
     Ground75 = create_meat(lean_decimal=0.75, name="Ground75")
     Ground55 = create_meat(0.55, "Ground55")
 
-    fat_g = 220
+    fat_g = 210
     protein_g = 80
     meals_per_day = 2
 
-    meat1 = Chuck(0)
-    meat2 = Ground75.from_protein_g(protein_g - meat1.protein_g)
-    fat = Suet((fat_g - meat1.fat_g - meat2.fat_g) / Suet.fat_g_per_g)
+    foods = [Chuck(), Ground55()]
+    balance_protein(foods, protein_g)
+    fat = Suet((fat_g - sum(f.fat_g for f in foods)) / Suet.fat_g_per_g)
+    foods.append(fat)
+    foods = [type(f)(f.weight_g / meals_per_day) for f in foods if f.weight_g]
 
-    foods = [
-        type(f)(f.weight_g / meals_per_day)
-        for f in (fat, meat1, meat2)
-        if f.weight_g
-    ]
-
-    for food in foods:
-        print(food)
-    print()
     print(f"total fat {fat_total(foods):.1f}")
     print(f"total protein {protein_total(foods):.1f}")
     print(f"fat/protein {fat_prop(foods):.1f}")
     print(f"energy {energy_total(foods):.1f}")
+    print("---")
+    for food in foods:
+        print(food)
