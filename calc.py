@@ -37,15 +37,21 @@ class Food:
 
 
 class Meal:
-    target_fat_g = 210
-    target_protein_g = 80
-    meals_per_d = 2
-
-    def __init__(self, foods, fat):
+    def __init__(
+        self,
+        foods,
+        fat,
+        target_fat_g,
+        target_protein_g,
+        meals_per_d,
+    ):
+        self.target_fat_g = target_fat_g
+        self.target_protein_g = target_protein_g
+        self.meals_per_d = meals_per_d
         self.foods = foods
         self.balance_protein()
         fat.weight_g = (
-            self.target_fat_g - sum(f.fat_g for f in foods)
+            target_fat_g - sum(f.fat_g for f in foods)
         ) / fat.fat_g_per_g
         foods.append(fat)
         for f in foods:
