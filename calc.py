@@ -33,7 +33,7 @@ class Food:
         return self
 
     def __str__(self):
-        return f"{self.name} {self.weight_g:.1f} g"
+        return f"{self.name} {round(self.weight_g)} g"
 
 
 class Meal:
@@ -59,10 +59,10 @@ class Meal:
 
     def __str__(self):
         out = [
-            f"total fat {self.fat_total:.1f}",
-            f"total protein {self.protein_total:.1f}",
+            f"total fat {round(self.fat_total)}",
+            f"total protein {round(self.protein_total)}",
             f"fat/protein {self.fat_prop:.1f}",
-            f"energy {self.energy_total:.1f}",
+            f"energy {round(self.energy_total)}",
             "---",
         ]
         return "\n".join(out + [str(f) for f in self.foods])
