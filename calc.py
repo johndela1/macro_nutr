@@ -124,8 +124,8 @@ if __name__ == "__main__":
                 # ground50(0),
             ],
             suet,
-            target_fat_g=242,
-            target_protein_g=95,
-            meals_per_d=3,
+            target_fat_g=275,
+            target_protein_g=120,
+            meals_per_d=4,
         )
     )
