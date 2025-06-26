@@ -103,12 +103,29 @@ class Meal:
 
 
 if __name__ == "__main__":
-    chuck = Food.create_meat("chuck", lean_decimal=0.87)
-    ground55 = Food.create_meat("ground55", 0.55)
+    chuck = Food.create_meat("chuck", lean_decimal=0.80)
+    ground50 = Food.create_meat("ground50", 0.50)
+    ground85 = Food.create_meat("ground85", lean_decimal=0.85)
+    ground78 = Food.create_meat("ground78", lean_decimal=0.78)
     ground75 = Food.create_meat("ground75", lean_decimal=0.75)
     lamb = Food.create_meat("lamb", lean_decimal=0.88)
     ribeye = Food.create_meat("ribeye", lean_decimal=0.80)
     salmon = Food(name="salmon", fat_g_per_g=0.11, protein_g_per_g=0.20)
     suet = Food("suet", fat_g_per_g=0.946, protein_g_per_g=0.018)
-
-    print(Meal([chuck, ground55], suet))
+    sausage = Food.create_meat("sausage", 0.9)
+    primal = Food.create_meat("primal", lean_decimal=0.90)
+    print(
+        Meal(
+            [
+                # primal(0),
+                # chuck,
+                # ground75,
+                ground78,
+                # ground50(0),
+            ],
+            suet,
+            target_fat_g=242,
+            target_protein_g=95,
+            meals_per_d=3,
+        )
+    )
