@@ -118,9 +118,9 @@ if __name__ == "__main__":
         Meal(
             [
                 # primal(0),
-                # chuck,
-                # ground75,
-                ground78,
+                #            chuck,
+                ground75,
+                # Food.create_meat("shrimp", 0.99)(83),
                 # ground50(0),
             ],
             suet,
